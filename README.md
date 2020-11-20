@@ -2,7 +2,6 @@
 
 API for IdleDB.
 
-
 ## Usage
 
 Change each value in `.env` to your needs.
@@ -10,7 +9,7 @@ Change each value in `.env` to your needs.
 ```
 .env keys:
 
-*PORT=port
+*PORT=3001
 *IDLEAPI_ENV=dev|prod
 
 *PG_USER=postgres
