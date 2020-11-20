@@ -7,6 +7,7 @@ require "crecto"
 require "log"
 
 require "./idleapi/**"
+require "./helpers"
 
 module Idleapi
   if ENV["IDLEAPI_ENV"]? == "dev"
@@ -35,11 +36,20 @@ module Idleapi
       halt env, status_code: 404
     end
 
-    adv = RedisDB.pttl "adv:#{id}"
+    adv_ttl = RedisDB.ttl "adv:#{id}"
+    level = xp_to_level user.xp!
+
+    if adv_ttl == -2
+      adventure = nil
+    else
+      adventure_num = RedisDB.get "adv:#{id}"
+      adventure_left = adv_ttl - 259200
+      adventure = {"done": adventure_left <= 0, "time_left": adventure_left, "number": adventure_num.not_nil!.to_i}
+    end
 
     env.response.content_type = "application/json"
-    {"character_name": user.name, "level": user.xp,
-     "adventure_time_left": adv < 0 ? 0 : adv, "race": user.race,
+    {"character_name": user.name, "level": level,
+     "adventure": adventure, "race": user.race,
      "class": user.class}.to_json
   end
 
