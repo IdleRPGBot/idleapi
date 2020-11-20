@@ -1,0 +1,27 @@
+name: idleapi
+version: 0.1.0
+
+authors:
+  - domterion
+
+targets:
+  idleapi:
+    main: src/idleapi.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+    branch: master
+  dotenv:
+    github: gdotdesign/cr-dotenv
+  pg:
+    github: will/crystal-pg
+  crecto:    
+    github: Crecto/crecto
+  redis:
+    github: stefanwille/crystal-redis
+    version: ~> 2.6.0
+
+crystal: 0.35.1
+
+license: MIT
